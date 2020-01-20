@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdint>
 #include <functional>
+#include <fstream>
 void practice1()
 {
     int32_t a, b;
@@ -111,7 +112,6 @@ void practice6()
     uint16_t cyclic_shift_11 = (a << (11 % (sizeof(a) * 8))) | (a >> (uint64_t(sizeof(a) * 8 - 11 - 1) % (sizeof(a) * 8)));
     std::cout << "Result of cyclic shifting" << cyclic_shift_11<< std::endl;
 };
-//TODO : alternative
 void practice6_alternative()
 {
     // normal case per bit shifting
@@ -119,12 +119,133 @@ void practice6_alternative()
     std::cout << "Write word number" << std::endl;
     std::cin >> a;
     uint16_t cyclic_shift_11 = 0;
-    for(int64_t t = sizeof(a) * 8 - 1 , k = ; t > -1; t--)
+    constexpr uint64_t shiftVal = 11 % (sizeof(a) * 8);
+    for(uint64_t t = 0; t < sizeof(a) * 8; t++)
     {
-
+        uint16_t pos = (t + shiftVal) % (sizeof(a) * 8);
+        if(a & (1u << t))
+        {
+            cyclic_shift_11 |= (1u << pos);
+        }
     }
+    std::cout << "Result of cyclic shifting" << cyclic_shift_11<< std::endl;
 }
 void practice7()
+{
+    //same as 4
+    // add values to permutation mask
+    uint32_t permuteMask[32] =
+    {
+        1, 0, 3, 2, 5, 4, 7, 6,
+        9, 8, 11, 10, 13, 12, 15, 14,
+        17, 16, 19, 18, 24, 20, 23, 22,
+        25, 24, 27, 26, 32, 28, 31, 30,
+    };
+    uint32_t a;
+    uint32_t permuteA = 0;
+    std::cout << "Write dword number" << std::endl;
+    std::cin >> a;
+    for(uint64_t t = 0; t < 32; t++)
+    {
+        permuteA |= ((a >> t) & 1) << permuteMask[t];
+    }
+    std::cout << "Result of cyclic shifting" << permuteA<< std::endl;
+}
+
+void practice8()
+{
+    //wtf?
+}
+void practice9()
+{
+    //wtf?
+}
+void practice10()
+{
+    //wtf?
+}
+void practice11()
+{
+    //wtf?
+}
+void practice12()
+{
+    int matrixA[8][8] =
+    {
+        0, 1, 2, 3, 4, 5, 6, 7,
+        1, 2, 3, 4, 5, 6, 7, 0,
+        2, 3, 4, 5, 6, 7, 0, 1,
+        3, 4, 5, 6, 7, 0, 1, 2,
+        4, 5, 6, 7, 0, 1, 2, 3,
+        5, 6, 7, 0, 1, 2, 3, 4,
+        6, 7, 0, 1, 2, 3, 4, 5,
+        7, 0, 1, 2, 3, 4, 5, 6
+    };
+    int matrixB[8][8] =
+    {
+       -0,-1,-2,-3,-4,-5,-6,-7,
+       -1,-2,-3,-4,-5,-6,-7,-0,
+       -2,-3,-4,-5,-6,-7,-0,-1,
+       -3,-4,-5,-6,-7,-0,-1,-2,
+       -4,-5,-6,-7,-0,-1,-2,-3,
+       -5,-6,-7,-0,-1,-2,-3,-4,
+       -6,-7,-0,-1,-2,-3,-4,-5,
+       -7,-0,-1,-2,-3,-4,-5,-6
+    };
+    uint32_t a;
+    std::cout << "Write number of column, which will replaced" << std::endl;
+    std::cin >> a;
+    for(auto i = 0; i < 8;i++)
+    {
+        auto s = matrixA[i][a];
+        matrixA[i][a] = matrixB[i][a];
+        matrixB[i][a] = s;
+    }
+}
+void practice13()
+{
+    //wtf????
+    // hash (IV xor data -> substitution -> permutation -> hash)
+}
+
+void practice14()
+{
+    //input:
+    //      input.txt
+    //      input1.txt
+    //output:
+    //      sum mod 2^32
+    //remark
+    //      accumulation values of symbols, which have ascii format
+    //      'a' == 97 etc. (possible :) i don't now really value of char 'a' in ascii, just look pic in google ;)
+    std::fstream in;
+    uint32_t sums = 0;
+    in.open("input.txt",std::ios::in);
+    if(in.is_open())
+    {
+        while(!in.eof())
+        {
+            char c = 0;
+            in.get(c);
+            if (!in.eof()) sums += c;
+        }
+    }
+    in.close();
+    in.open("input1.txt",std::ios::in);
+    if(in.is_open())
+    {
+        while(!in.eof())
+        {
+            char c = 0;
+            in.get(c);
+            if (!in.eof()) sums += c;
+        }
+    }
+    in.close();
+    std::cout << "sums of files(mod 2^32) is " <<  sums;
+}
+
+void practice15()
 {
 
 }
