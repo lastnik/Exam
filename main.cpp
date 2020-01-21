@@ -154,19 +154,109 @@ void practice7()
 
 void practice8()
 {
-    //wtf?
+    // перестановка байтов в четверном слове
+    uint8_t permutation[] =
+    {
+        4, 0, 2, 7, 3, 1, 5, 6
+    };
+    auto P = [permutation](uint64_t a)
+    {
+        uint64_t result = 0;
+        for(int i = 0; i < 8;i++)
+        {
+            result |= uint64_t(a & 0xFF) << permutation[i];
+            a = a >> 8;
+        }
+        return result;
+    };
+    std::cout << "Write qword number" << std::endl;
+    uint64_t a;
+    std::cin >> a;
+    std::cout << "Result of permutation " << std::hex << P(a);
 }
 void practice9()
 {
-    //wtf?
+//замена байтов в двойном слове(каждый 4 бита заменяются)
+    uint8_t substitution[] =
+    {
+        9, 1, 8, 15, 0, 3, 4, 7,
+        6, 2, 5, 14, 11, 10, 12, 13
+    };
+    auto S = [substitution](uint32_t a)
+    {
+        uint32_t result = 0;
+        for(int i = 0; i < 8;i++)
+        {
+            result = substitution[a & 0xF];
+            a = a >> 4; result = result << 4;
+        }
+        return result;
+    };
+    std::cout << "Write qword number" << std::endl;
+    uint32_t a;
+    std::cin >> a;
+    std::cout << "Result of substitution " << std::hex << S(a);
 }
 void practice10()
 {
-    //wtf?
+    // замена 4 - > 6
+    uint8_t substitution[] =
+    {
+            18, 2, 16, 30, 1, 40, 8, 7,
+            6, 35, 10, 28, 11, 48, 24, 30
+    };
+    auto S = [substitution](uint32_t a)
+    {
+    uint32_t result = 0;
+    for(int i = 0; i < 8;i++)
+    {
+        result = substitution[a & 0xF];
+        a = a >> 4; result = result << 6;
+    }
+    return result;
+    };
+    std::cout << "Write qword number" << std::endl;
+    uint32_t a;
+    std::cin >> a;
+    std::cout << "Result of substitution " << std::hex << S(a);
 }
 void practice11()
 {
-    //wtf?
+    //замена байтов в четверном слове(каждый байт заменяется)
+    uint8_t substitution[] =
+    {
+        252,  238,  221,  17,  207,  110,  49,  22,  251,  196,  250,  218,  35,
+        197,  4,  77,  233,119,  240,  219,  147,  46,  153,  186,  23,  54,  241,
+        187,  20,  205,  95,  193,  249,  24,  101,90,  226, 92,  239,  33,  129,
+        28,  60,  66,  139,  1,  142,  79,  5,  132,  2,  174,  227,  106,  143,
+        160,  6,  11,  237,  152,  127,  212,  211,  31,  235,  52,  44,  81,  234,
+        200,  72,  171,  242,  42,104,  162,  253,  58,  206,  204,  181,  112,  14,
+        86,  8,  12,  118,  18,  191,  114,  19,  71,  156, 183, 93,  135,  21,  161,
+        150,  41,  16,  123,  154,  199,  243,  145,  120,  111,  157,  158,  178,
+        177,  50,  117,  25,  61,  255,  53,  138,  126,  109,  84,  198,  128,  195,
+        189,  13,  87,  223,245,  36,  169,  62,  168,  67,  201,  215,  121,  214,  246,
+        124,  34,  185,  3,  224,  15,  236,222,  122,148,  176,  188,  220,  232,  40,  80,
+        78,  51,  10,  74,  167,  151,  96,  115,  30,  0,98,  68,  26,  184,  56,  130,  100,
+        159,  38,  65,  173,  69,  70,  146,  39,  94,  85,  47,  140,  163,165,  125,  105,
+        213,  149,  59,  7,  88,  179,  64,  134,  172,  29,  247,  48,  55,  107,  228,  136,
+        217, 231,  137,  225,  27,  131,  73,  76,  63,  248,  254,  141,  83,  170,  144,  202,
+        216,  133,97,  32,  113,  103,  164,  45,  43,  9,  91,  203,  155,  37,  208,  190,  229,
+        108,  82,  89,  166,116, 210, 230, 244, 180, 192, 209, 102, 175, 194, 57, 75, 99, 182
+    };
+    auto S = [substitution](uint64_t a)
+    {
+        uint64_t result = 0;
+        for(int i = 0; i < 8;i++)
+        {
+            result = substitution[a & 0xFF];
+            a = a >> 8; result = result << 8;
+        }
+        return result;
+    };
+    std::cout << "Write qword number" << std::endl;
+    uint64_t a;
+    std::cin >> a;
+    std::cout << "Result of substitution " << std::hex << S(a);
 }
 void practice12()
 {
@@ -202,10 +292,81 @@ void practice12()
         matrixB[i][a] = s;
     }
 }
+
+
+
 void practice13()
 {
     //wtf????
     // hash (IV xor data -> substitution -> permutation -> hash)
+    uint8_t substitution[] =
+    {
+        252,  238,  221,  17,  207,  110,  49,  22,  251,  196,  250,  218,  35,
+        197,  4,  77,  233,119,  240,  219,  147,  46,  153,  186,  23,  54,  241,
+        187,  20,  205,  95,  193,  249,  24,  101,90,  226, 92,  239,  33,  129,
+        28,  60,  66,  139,  1,  142,  79,  5,  132,  2,  174,  227,  106,  143,
+        160,  6,  11,  237,  152,  127,  212,  211,  31,  235,  52,  44,  81,  234,
+        200,  72,  171,  242,  42,104,  162,  253,  58,  206,  204,  181,  112,  14,
+        86,  8,  12,  118,  18,  191,  114,  19,  71,  156, 183, 93,  135,  21,  161,
+        150,  41,  16,  123,  154,  199,  243,  145,  120,  111,  157,  158,  178,
+        177,  50,  117,  25,  61,  255,  53,  138,  126,  109,  84,  198,  128,  195,
+        189,  13,  87,  223,245,  36,  169,  62,  168,  67,  201,  215,  121,  214,  246,
+        124,  34,  185,  3,  224,  15,  236,222,  122,148,  176,  188,  220,  232,  40,  80,
+        78,  51,  10,  74,  167,  151,  96,  115,  30,  0,98,  68,  26,  184,  56,  130,  100,
+        159,  38,  65,  173,  69,  70,  146,  39,  94,  85,  47,  140,  163,165,  125,  105,
+        213,  149,  59,  7,  88,  179,  64,  134,  172,  29,  247,  48,  55,  107,  228,  136,
+        217, 231,  137,  225,  27,  131,  73,  76,  63,  248,  254,  141,  83,  170,  144,  202,
+        216,  133,97,  32,  113,  103,  164,  45,  43,  9,  91,  203,  155,  37,  208,  190,  229,
+        108,  82,  89,  166,116, 210, 230, 244, 180, 192, 209, 102, 175, 194, 57, 75, 99, 182
+    };
+    uint8_t permutation[] =
+    {
+        4, 0, 2, 7, 3, 1, 5, 6
+    };
+    std::string str;
+    std::cout << "Write a string" << std::endl;
+    std::cin >> str;
+    uint64_t IV = 0xF1E0F1E0F1E0F1E0;
+    uint64_t hash = 0;
+    uint64_t p = 0;
+    auto S = [substitution](uint64_t a)
+    {
+        uint64_t result = 0;
+        for(int i = 0; i < 8;i++)
+        {
+            result = substitution[a & 0xFF];
+            a = a >> 8; result = result << 8;
+        }
+        return result;
+    };
+    auto P = [permutation](uint64_t a)
+    {
+        uint64_t result = 0;
+        for(int i = 0; i < 8;i++)
+        {
+            result |= (a & 0xFF) << permutation[i];
+            a = a >> 8;
+        }
+        return result;
+    };
+    for(auto i : str)
+    {
+        if(p == 8)
+        {
+            p = 0;
+            for(int i = 0; i < 8; i++)
+            {
+                hash = P(S(hash));
+            }
+        }
+        hash = hash ^ (uint64_t(i) << p * 8);
+        p++;
+    }
+    for(int i = 0; i < 8; i++)
+    {
+        hash = P(S(hash));
+    }
+    std::cout << "Hash : " << std::hex << hash;
 }
 
 void practice14()
@@ -247,11 +408,41 @@ void practice14()
 
 void practice15()
 {
-
+    std::fstream in;
+    std::vector<uint8_t> sums(0);
+    in.open("input.txt",std::ios::in);
+    if(in.is_open())
+    {
+        while(!in.eof())
+        {
+            char c = 0;
+            in.get(c);
+            if (!in.eof())
+                sums.push_back(c);
+        }
+    }
+    in.close();
+    in.open("input.xor",std::ios::out);
+    std::string pas;
+    std::cout << "Write a password" << std::endl;
+    std::cin >> pas;
+    std::vector<uint8_t> Xor(0);
+    for(size_t i = 0; i < pas.size(); i++)
+    {
+        Xor.push_back(pas[i]);
+    }
+    size_t index = 0;
+    for(auto i : sums)
+    {
+        in << (i ^ Xor[index]);
+        index++;
+        index %= Xor.size();
+    }
+    in.close();
 }
 int main()
 {
     // practice"№"();
     // practice1();
-    practice1();
+    practice13();
 }
